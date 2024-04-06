@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management CRM</title>
+</head>
+<body>
+    <h1>Students</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <ul>
+        {% for student in students %}
+            <li>{{ student[1] }} - {{ student[2] }} - {{ student[3] }}
+                <a href="/update/{{ student[0] }}">Edit</a>
+                <form action="/delete/{{ student[0] }}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this student?')">
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="/add">Add Student</a>
+</body>
+</html>
